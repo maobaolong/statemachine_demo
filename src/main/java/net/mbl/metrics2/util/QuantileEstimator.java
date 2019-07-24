@@ -16,17 +16,16 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.util;
 
-/**
- * Interface defining events api.
- *
- */
-public interface Event<TYPE extends Enum<TYPE>> {
+import java.util.Map;
 
-    TYPE getType();
+public interface QuantileEstimator {
+    void insert(long value);
 
-    long getTimestamp();
+    Map<Quantile, Long> snapshot();
 
-    String toString();
+    long getCount();
+
+    void clear();
 }

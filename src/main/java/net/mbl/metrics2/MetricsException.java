@@ -16,17 +16,39 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2;
 
 /**
- * Interface defining events api.
- *
+ * A general metrics exception wrapper
  */
-public interface Event<TYPE extends Enum<TYPE>> {
+public class MetricsException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
 
-    TYPE getType();
+    /**
+     * Construct the exception with a message
+     *
+     * @param message for the exception
+     */
+    public MetricsException(String message) {
+        super(message);
+    }
 
-    long getTimestamp();
+    /**
+     * Construct the exception with a message and a cause
+     *
+     * @param message for the exception
+     * @param cause   of the exception
+     */
+    public MetricsException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-    String toString();
+    /**
+     * Construct the exception with a cause
+     *
+     * @param cause of the exception
+     */
+    public MetricsException(Throwable cause) {
+        super(cause);
+    }
 }

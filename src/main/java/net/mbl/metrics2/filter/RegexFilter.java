@@ -16,17 +16,16 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.filter;
+
+import com.google.re2j.Pattern;
 
 /**
- * Interface defining events api.
- *
+ * A regex pattern filter for metrics
  */
-public interface Event<TYPE extends Enum<TYPE>> {
-
-    TYPE getType();
-
-    long getTimestamp();
-
-    String toString();
+public class RegexFilter extends AbstractPatternFilter {
+    @Override
+    protected Pattern compile(String s) {
+        return Pattern.compile(s);
+    }
 }

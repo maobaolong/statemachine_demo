@@ -16,17 +16,21 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.impl;
+
+import java.util.ArrayList;
 
 /**
- * Interface defining events api.
- *
+ * Builder for the immutable metrics buffers
  */
-public interface Event<TYPE extends Enum<TYPE>> {
+class MetricsBufferBuilder extends ArrayList<MetricsBuffer.Entry> {
+    private static final long serialVersionUID = 1L;
 
-    TYPE getType();
+    boolean add(String name, Iterable<MetricsRecordImpl> records) {
+        return add(new MetricsBuffer.Entry(name, records));
+    }
 
-    long getTimestamp();
-
-    String toString();
+    MetricsBuffer get() {
+        return new MetricsBuffer(this);
+    }
 }

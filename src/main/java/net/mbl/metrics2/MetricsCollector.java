@@ -16,17 +16,25 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2;
 
 /**
- * Interface defining events api.
- *
+ * The metrics collector interface
  */
-public interface Event<TYPE extends Enum<TYPE>> {
+public interface MetricsCollector {
+    /**
+     * Add a metrics record
+     *
+     * @param name of the record
+     * @return a {@link MetricsRecordBuilder} for the record {@code name}
+     */
+    public MetricsRecordBuilder addRecord(String name);
 
-    TYPE getType();
-
-    long getTimestamp();
-
-    String toString();
+    /**
+     * Add a metrics record
+     *
+     * @param info of the record
+     * @return a {@link MetricsRecordBuilder} for metrics {@code info}
+     */
+    public MetricsRecordBuilder addRecord(MetricsInfo info);
 }

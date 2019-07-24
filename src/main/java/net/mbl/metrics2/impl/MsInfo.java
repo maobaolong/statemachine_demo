@@ -16,42 +16,40 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.impl;
+
+import net.mbl.metrics2.MetricsInfo;
+
+import java.util.StringJoiner;
 
 /**
- * Parent class of all the events. All events extend this class.
+ * Metrics system related metrics info instances
  */
-public abstract class AbstractEvent<TYPE extends Enum<TYPE>>
-        implements Event<TYPE> {
+public enum MsInfo implements MetricsInfo {
+    NumActiveSources("Number of active metrics sources"),
+    NumAllSources("Number of all registered metrics sources"),
+    NumActiveSinks("Number of active metrics sinks"),
+    NumAllSinks("Number of all registered metrics sinks"),
+    Context("Metrics context"),
+    Hostname("Local hostname"),
+    SessionId("Session ID"),
+    ProcessName("Process name");
+    private final String desc;
 
-    private final TYPE type;
-    private final long timestamp;
-
-    // use this if you DON'T care about the timestamp
-    public AbstractEvent(TYPE type) {
-        this.type = type;
-        // We're not generating a real timestamp here.  It's too expensive.
-        timestamp = -1L;
-    }
-
-    // use this if you care about the timestamp
-    public AbstractEvent(TYPE type, long timestamp) {
-        this.type = type;
-        this.timestamp = timestamp;
+    MsInfo(String desc) {
+        this.desc = desc;
     }
 
     @Override
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    @Override
-    public TYPE getType() {
-        return type;
+    public String description() {
+        return desc;
     }
 
     @Override
     public String toString() {
-        return "EventType: " + getType();
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "{", "}")
+                .add("name=" + name())
+                .add("description=" + desc)
+                .toString();
     }
 }

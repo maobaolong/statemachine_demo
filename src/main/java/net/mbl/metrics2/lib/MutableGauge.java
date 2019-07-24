@@ -16,17 +16,33 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.lib;
+
+import net.mbl.metrics2.MetricsInfo;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Interface defining events api.
- *
+ * The mutable gauge metric interface
  */
-public interface Event<TYPE extends Enum<TYPE>> {
+public abstract class MutableGauge extends MutableMetric {
+    private final MetricsInfo info;
 
-    TYPE getType();
+    protected MutableGauge(MetricsInfo info) {
+        this.info = checkNotNull(info, "metric info");
+    }
 
-    long getTimestamp();
+    protected MetricsInfo info() {
+        return info;
+    }
 
-    String toString();
+    /**
+     * Increment the value of the metric by 1
+     */
+    public abstract void incr();
+
+    /**
+     * Decrement the value of the metric by 1
+     */
+    public abstract void decr();
 }

@@ -16,17 +16,19 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.filter;
+
+import com.google.re2j.Pattern;
+import net.mbl.fs.GlobPattern;
 
 /**
- * Interface defining events api.
- *
+ * A glob pattern filter for metrics.
+ * <p>
+ * The class name is used in metrics config files
  */
-public interface Event<TYPE extends Enum<TYPE>> {
-
-    TYPE getType();
-
-    long getTimestamp();
-
-    String toString();
+public class GlobFilter extends AbstractPatternFilter {
+    @Override
+    protected Pattern compile(String s) {
+        return GlobPattern.compile(s);
+    }
 }

@@ -16,17 +16,19 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2;
 
 /**
- * Interface defining events api.
- *
+ * The source of metrics information. It generates and updates metrics. It
+ * registers with {@link MetricsSystem}, which periodically polls it to collect
+ * {@link MetricsRecord} and passes it to {@link MetricsSink}.
  */
-public interface Event<TYPE extends Enum<TYPE>> {
-
-    TYPE getType();
-
-    long getTimestamp();
-
-    String toString();
+public interface MetricsSource {
+    /**
+     * Get metrics from the metrics source
+     *
+     * @param collector to contain the resulting metrics snapshot
+     * @param all       if true, return all metrics even if unchanged.
+     */
+    void getMetrics(MetricsCollector collector, boolean all);
 }

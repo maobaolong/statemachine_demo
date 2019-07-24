@@ -16,17 +16,33 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Interface defining events api.
- *
+ * Annotation interface for a group of metrics
  */
-public interface Event<TYPE extends Enum<TYPE>> {
+@Documented
+@Target( {ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Metrics {
+    /**
+     * @return the (record) name of the metrics
+     */
+    String name() default "";
 
-    TYPE getType();
+    /**
+     * @return the optional description of metrics
+     */
+    String about() default "";
 
-    long getTimestamp();
-
-    String toString();
+    /**
+     * @return the context name for a group of metrics
+     */
+    String context();
 }

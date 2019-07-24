@@ -16,42 +16,33 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.impl;
 
-/**
- * Parent class of all the events. All events extend this class.
- */
-public abstract class AbstractEvent<TYPE extends Enum<TYPE>>
-        implements Event<TYPE> {
+import net.mbl.metrics2.AbstractMetric;
+import net.mbl.metrics2.MetricType;
+import net.mbl.metrics2.MetricsInfo;
+import net.mbl.metrics2.MetricsVisitor;
 
-    private final TYPE type;
-    private final long timestamp;
+class MetricGaugeInt extends AbstractMetric {
+    final int value;
 
-    // use this if you DON'T care about the timestamp
-    public AbstractEvent(TYPE type) {
-        this.type = type;
-        // We're not generating a real timestamp here.  It's too expensive.
-        timestamp = -1L;
-    }
-
-    // use this if you care about the timestamp
-    public AbstractEvent(TYPE type, long timestamp) {
-        this.type = type;
-        this.timestamp = timestamp;
+    MetricGaugeInt(MetricsInfo info, int value) {
+        super(info);
+        this.value = value;
     }
 
     @Override
-    public long getTimestamp() {
-        return timestamp;
+    public Integer value() {
+        return value;
     }
 
     @Override
-    public TYPE getType() {
-        return type;
+    public MetricType type() {
+        return MetricType.GAUGE;
     }
 
     @Override
-    public String toString() {
-        return "EventType: " + getType();
+    public void visit(MetricsVisitor visitor) {
+        visitor.gauge(this, value);
     }
 }

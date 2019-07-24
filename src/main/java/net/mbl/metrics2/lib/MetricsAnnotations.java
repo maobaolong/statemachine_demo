@@ -16,17 +16,28 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.lib;
+
+import net.mbl.metrics2.MetricsSource;
 
 /**
- * Interface defining events api.
- *
+ * Metrics annotation helpers.
  */
-public interface Event<TYPE extends Enum<TYPE>> {
+public
+class MetricsAnnotations {
+    /**
+     * Make an metrics source from an annotated object.
+     *
+     * @param source the annotated object.
+     * @return a metrics source
+     */
+    public static MetricsSource makeSource(Object source) {
+        return new MetricsSourceBuilder(source,
+                DefaultMetricsFactory.getAnnotatedMetricsFactory()).build();
+    }
 
-    TYPE getType();
-
-    long getTimestamp();
-
-    String toString();
+    public static MetricsSourceBuilder newSourceBuilder(Object source) {
+        return new MetricsSourceBuilder(source,
+                DefaultMetricsFactory.getAnnotatedMetricsFactory());
+    }
 }

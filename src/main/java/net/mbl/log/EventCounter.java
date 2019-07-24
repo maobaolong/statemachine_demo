@@ -16,17 +16,20 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.log;
 
 /**
- * Interface defining events api.
- *
+ * A log4J Appender that simply counts logging events in three levels:
+ * fatal, error and warn. The class name is used in log4j.properties
+ * @deprecated use {@link net.mbl.log.metrics.EventCounter} instead
  */
-public interface Event<TYPE extends Enum<TYPE>> {
-
-    TYPE getType();
-
-    long getTimestamp();
-
-    String toString();
+@Deprecated
+public class EventCounter extends net.mbl.log.metrics.EventCounter {
+    static {
+        // The logging system is not started yet.
+        System.err.println("WARNING: " + EventCounter.class.getName() +
+                " is deprecated. Please use " +
+                net.mbl.log.metrics.EventCounter.class.getName() +
+                " in all the log4j.properties files.");
+    }
 }

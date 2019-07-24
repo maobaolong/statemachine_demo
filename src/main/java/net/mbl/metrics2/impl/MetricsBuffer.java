@@ -16,42 +16,40 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.impl;
+
+import java.util.Iterator;
 
 /**
- * Parent class of all the events. All events extend this class.
+ * An immutable element for the sink queues.
  */
-public abstract class AbstractEvent<TYPE extends Enum<TYPE>>
-        implements Event<TYPE> {
+class MetricsBuffer implements Iterable<MetricsBuffer.Entry> {
+    private final Iterable<Entry> mutable;
 
-    private final TYPE type;
-    private final long timestamp;
-
-    // use this if you DON'T care about the timestamp
-    public AbstractEvent(TYPE type) {
-        this.type = type;
-        // We're not generating a real timestamp here.  It's too expensive.
-        timestamp = -1L;
-    }
-
-    // use this if you care about the timestamp
-    public AbstractEvent(TYPE type, long timestamp) {
-        this.type = type;
-        this.timestamp = timestamp;
+    MetricsBuffer(Iterable<Entry> mutable) {
+        this.mutable = mutable;
     }
 
     @Override
-    public long getTimestamp() {
-        return timestamp;
+    public Iterator<Entry> iterator() {
+        return mutable.iterator();
     }
 
-    @Override
-    public TYPE getType() {
-        return type;
-    }
+    static class Entry {
+        private final String sourceName;
+        private final Iterable<MetricsRecordImpl> records;
 
-    @Override
-    public String toString() {
-        return "EventType: " + getType();
+        Entry(String name, Iterable<MetricsRecordImpl> records) {
+            sourceName = name;
+            this.records = records;
+        }
+
+        String name() {
+            return sourceName;
+        }
+
+        Iterable<MetricsRecordImpl> records() {
+            return records;
+        }
     }
 }

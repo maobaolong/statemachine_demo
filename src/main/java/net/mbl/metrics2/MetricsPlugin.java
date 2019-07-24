@@ -16,17 +16,21 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2;
+
+import org.apache.commons.configuration2.SubsetConfiguration;
+
 
 /**
- * Interface defining events api.
- *
+ * The plugin interface for the metrics framework
  */
-public interface Event<TYPE extends Enum<TYPE>> {
 
-    TYPE getType();
 
-    long getTimestamp();
-
-    String toString();
+public interface MetricsPlugin {
+    /**
+     * Initialize the plugin
+     *
+     * @param conf the configuration object for the plugin
+     */
+    void init(SubsetConfiguration conf);
 }

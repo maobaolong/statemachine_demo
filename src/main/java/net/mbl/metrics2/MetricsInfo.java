@@ -16,17 +16,27 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2;
+
+import net.mbl.metrics2.annotation.Metric;
 
 /**
- * Interface defining events api.
- *
+ * Interface to provide immutable metainfo for metrics.
  */
-public interface Event<TYPE extends Enum<TYPE>> {
+public interface MetricsInfo {
+    /**
+     * Typically name corresponds to annotation {@link Metric#value()} or
+     * the name of the class.
+     *
+     * @return the name of the metric/tag
+     */
+    String name();
 
-    TYPE getType();
-
-    long getTimestamp();
-
-    String toString();
+    /**
+     * Typically the description corresponds to annotation {@link Metric#about()}
+     * or the name of the class.
+     *
+     * @return the description of the metric/tag
+     */
+    String description();
 }

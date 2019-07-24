@@ -16,17 +16,28 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.lib;
+
+import net.mbl.metrics2.MetricsInfo;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Interface defining events api.
- *
+ * The mutable counter (monotonically increasing) metric interface
  */
-public interface Event<TYPE extends Enum<TYPE>> {
+public abstract class MutableCounter extends MutableMetric {
+    private final MetricsInfo info;
 
-    TYPE getType();
+    protected MutableCounter(MetricsInfo info) {
+        this.info = checkNotNull(info, "counter info");
+    }
 
-    long getTimestamp();
+    protected MetricsInfo info() {
+        return info;
+    }
 
-    String toString();
+    /**
+     * Increment the metric value by 1.
+     */
+    public abstract void incr();
 }

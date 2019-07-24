@@ -16,17 +16,13 @@
  * limitations under the License.
  */
 
-package net.mbl.event;
+package net.mbl.metrics2.lib;
 
 /**
- * Interface defining events api.
- *
+ * A convenient mutable metric for throughput measurement
  */
-public interface Event<TYPE extends Enum<TYPE>> {
-
-    TYPE getType();
-
-    long getTimestamp();
-
-    String toString();
+public class MutableRate extends MutableStat {
+    MutableRate(String name, String description, boolean extended) {
+        super(name, description, "Ops", "Time", extended);
+    }
 }
