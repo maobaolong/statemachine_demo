@@ -1,0 +1,15 @@
+digraph aaa {
+graph [ label="aaa", fontsize=24, fontname=Helvetica];
+node [fontsize=12, fontname=Helvetica];
+edge [fontsize=9, fontcolor=blue, fontname=Arial];
+"aaa.INIT" [ label = INIT ];
+"aaa.INIT" -> "aaa.LOCALIZED" [ label = "RECOVERED" ];
+"aaa.INIT" -> "aaa.DOWNLOADING" [ label = "REQUEST" ];
+"aaa.DOWNLOADING" [ label = DOWNLOADING ];
+"aaa.DOWNLOADING" -> "aaa.DOWNLOADING" [ label = "RELEASE,\nREQUEST" ];
+"aaa.DOWNLOADING" -> "aaa.FAILED" [ label = "LOCALIZATION_FAILED" ];
+"aaa.DOWNLOADING" -> "aaa.LOCALIZED" [ label = "LOCALIZED" ];
+"aaa.LOCALIZED" [ label = LOCALIZED ];
+"aaa.LOCALIZED" -> "aaa.LOCALIZED" [ label = "RELEASE,\nREQUEST" ];
+"aaa.FAILED" [ label = FAILED ];
+}
